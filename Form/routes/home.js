@@ -11,68 +11,90 @@ var save_form = function(req, res){
 		//render error in upload
 		res.end('nope');
 	}
-
-	var fs = require('fs');
-
-	var cfg = { 
-		headers: req.headers	
-	}; 
-	var Busboy = require('busboy');
-	busboy = new Busboy(cfg);
-
-	var num_files = 0; //keep count of number of files submitted
-	function max_files(){
-		if(num_files > 10){ //too many files
-			//delete bucket and contents
-			//render error in upload
-			res.end();
-		}
-	}
-
-	var messUp = function(err, data){//in case fileWrite or unlink fails
-			console.log(err, data);
-	}
-
+ 
 	/*create folder for print job*/
 	var AWS = require('aws-sdk');
 	AWS.config.loadFromPath('./aws-secret.json');
     var s3 = new AWS.S3();
     var time = new Date().getTime().toString();
     var params = { Bucket: time}; //name of folder to be created
-    s3.createBucket(params, messUp);
+    s3.createBucket(params, function(err, data){ 
+    	if(err){
+    		//render error page with errpr
+    		//email me with error
+    	}
 
-	/* Store details of print job in a json */
-	fs.unlink('./info.json', messUp); //delete prexisting copy from other print job
+    	add_to_queue()
+    });
 
-	fs.appendFile('./info.json', '{\n', messUp); //create json with opening curly brace
-	
-	busboy.on('field', function(fieldname, val){ //add form fields to json
-		var dict_entry = '\t' + '"' + fieldname + '"'  + ': ' + '"' + val + '"' + '\n';
-		fs.appendFile('./info.json', dict_entry, messUp);
-	}); 
+    /* I can only add files to the folder once its made
+    * so by making this block of code a function and calling after the
+    * bucket is made ensures that they aren't out of sync
+    */
+    function add_to_queue(){
 
-	/* Store form files in aws */
-	/*busboy.on('file', function(fieldname, file, filename, encoding, mimetype){ 
-		console.log('got file' + filename); 
-		var params = {Bucket: time, Key: filename, Body: file}; 
-		s3.upload(params, function(err, data){
-                        console.log(err, data);
-			num_files++;
-			max_files();
-                });
+		var num_files = 0; //keep count of number of files submitted
+		function max_files(){
+			if(num_files > 10){ //too many files
+				//delete bucket and contents
+				//render error in upload
+				res.end();
+			}
+		}
 
-	}); */
+		var cb = function(err, data){ //handle most callbacks 
+				console.log(err, data);
+		}
 
-	busboy.on('finish', function(){ 
-		fs.appendFile('./info.json', '}', messUp); //close json with closing curly brace
+		var fs = require('fs');
 
-		var json = fs.createReadStream('./info.json'); //create stream for file
-		var params = {Bucket: time, Key: 'info.json', Body: json};
-		s3.upload(params, messUp);	
+		var cfg = { 
+			headers: req.headers	
+		}; 
+		var Busboy = require('busboy');
+		busboy = new Busboy(cfg); //parses request for files and fields from form
 
-		res.end('done')
-	});	
+		/* Store details of print job in a json */
+		fs.unlink('./info.json', cb); //delete prexisting copy from other print job
+		fs.appendFile('./info.json', '{\n', cb); //create json with opening curly brace
+		
+		busboy.on('field', function(fieldname, val){ //add form fields to json
+			var dict_entry = '\t' + '"' + fieldname + '"'  + ': ' + '"' + val + '"' + '\n';
+			fs.appendFile('./info.json', dict_entry, cb);
+		}); 
 
-	req.pipe(busboy); //pipe request to busboy
+		/* Store form files in aws */
+		busboy.on('file', function(fieldname, file, filename, encoding, mimetype){ 
+			console.log('got file' + filename); 
+			var params = {Bucket: time, Key: filename, Body: file}; 
+			s3.upload(params, function(err, data){
+	            if(err){
+	            	//render error page with error
+	            	//email me with error
+	            }
+
+				num_files++;
+				max_files();
+	        });
+
+		}); 
+
+		busboy.on('finish', function(){ 
+			fs.appendFile('./info.json', '}', cb); //close json with closing curly brace
+
+			var json = fs.createReadStream('./info.json'); //create stream for file
+			var params = {Bucket: time, Key: 'info.json', Body: json};
+			s3.upload(params, function(err, data){
+	            if(err){
+	            	//render error page with error
+	            	//email me with error
+	            }
+	        });	
+
+			res.end('done')
+		});	
+
+		req.pipe(busboy); //pipe request to busboy
+	}
 }
 exports.save_form = save_form;
