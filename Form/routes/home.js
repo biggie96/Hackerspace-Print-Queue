@@ -50,28 +50,25 @@ var save_form = function(req, res){
 			headers: req.headers,
 
 			limits: {
-				files: 2
+				files: 4
 			}
 		}; 
 		var Busboy = require('busboy');
 		busboy = new Busboy(cfg); //parses request for files and fields from form
 
-		/* Store details of print job in a json */
+		/* Store details of print job in a txt file */
 		var fs = require('fs');
-		fs.unlink('./info.json', cb); //delete prexisting copy from other print job
-		fs.appendFile('./info.json', '{\n', cb); //create json with opening curly brace
+		fs.unlink('./info.txt', cb); //delete prexisting copy from other print job
 		
-		busboy.on('field', function(fieldname, val){ //add form fields to json
-			var dict_entry = '\t' + '"' + fieldname + '"'  + ': ' + '"' + val + '"' + '\n';
-			fs.appendFile('./info.json', dict_entry, cb);
+		busboy.on('field', function(fieldname, val){ //add field data to txt file
+			var field_data = fieldname + ': ' + val + '\n';
+			fs.appendFile('./info.txt', field_data, cb);
 		}); 
 
 		/* Store form files in aws */
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype){ 
 			num_files++;
 			files_added.push({ Key: filename });
-			//max_files(s3, time);
-
 			console.log('got file' + filename); 
 			var params = {Bucket: time, Key: filename, Body: file}; 
 			s3.upload(params, function(err, data){
@@ -87,7 +84,7 @@ var save_form = function(req, res){
 
 		busboy.on('finish', function(){ 
 			console.log(num_files + files_added);
-			if(num_files > 1){ //too many files
+			if(num_files > 3){ //too many files
 				console.log("got into check");
 				var params = {
 					Bucket: time,
@@ -115,17 +112,17 @@ var save_form = function(req, res){
 				res.end();
 			}
 			else{
-				fs.appendFile('./info.json', '}', cb); //close json with closing curly brace
-
-				var json = fs.createReadStream('./info.json'); //create stream for file
-				var params = {Bucket: time, Key: 'info.json', Body: json};
+				var info = fs.createReadStream('./info.txt'); //create stream for file
+				var params = {Bucket: time, Key: 'info.txt', Body: info};
 				s3.upload(params, function(err, data){
 		            if(err){
+		            	console.log(err);
+
 		            	res.render('error', {title: 'Error', message: 'sorry, shit happens'});
 						res.end();
 		            	//email me with error
-		            	console.log(err);
 		            }
+
 		        });	
 
 				res.end('done')
