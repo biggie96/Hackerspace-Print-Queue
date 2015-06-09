@@ -1,0 +1,8 @@
+# keys
+aws-secret.json
+
+# startup scripts
+bin/
+
+#log
+*.log

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Print Job Form</title>
+		<link href="stylesheets/style.css" type="text/css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Cuprum:700' rel='stylesheet' type='text/css'>
+	</head>
+
+	<body>
+		<div id="banner">
+
+			<h1> Hackerspace Print Queue </h1>
+			<p> If you need to print something, fill this out and we'll tell you when its done. </p>
+
+		</div>
+
+		<div id="print_form">
+
+			<form action="/" method="post" enctype="multipart/form-data">
+				<p> Name: <input class="data" type="text" name="name"> </p>
+				<br><br>
+
+				<p> Email: <input class="data" type="text" name="email"> </p>
+				<br><br>
+
+				<p> Notes: <input class="data" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.."> </p>
+				<br><br> 
+
+				<p> Files (Must be in .stl format): <input class="data" type="file" accept=".stl" name="stl_files" multiple> </p>
+				<br><br> 
+
+				<input type="submit" value="Submit">
+			</form>
+
+
+		</div>
+	</body>
+
+</html>
