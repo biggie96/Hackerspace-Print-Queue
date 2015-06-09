@@ -5,56 +5,59 @@ var render_home = function(req, res){
 exports.render_home = render_home;
 
 
-/* This function saves form data in aws storage*/
+/* This function saves form data in aws storage
+* The functions make_folder and add_files are only defined
+* to address synchronization issues
+*/
 var save_form = function(req, res){ 
 	if(parseInt(req.headers['content-length'], 10) > (10 * 1024 * 1024)){ //10mb upload limit
-		//render error in upload
-		res.end('nope');
+		res.render('error', {title: 'Max filesize exceeded', message: 'File too big'});
+		res.end();
+	}
+	else{
+		make_folder()
 	}
  
-	/*create folder for print job*/
-	var AWS = require('aws-sdk');
-	AWS.config.loadFromPath('./aws-secret.json');
-    var s3 = new AWS.S3();
-    var time = new Date().getTime().toString();
-    var params = { Bucket: time}; //name of folder to be created
-    s3.createBucket(params, function(err, data){ 
-    	if(err){
-    		//render error page with errpr
-    		//email me with error
-    	}
+	/*creates folder for print job*/
+	function make_folder(){
+		var AWS = require('aws-sdk');
+		AWS.config.loadFromPath('./aws-secret.json');
+	    var s3 = new AWS.S3();
+	    var time = new Date().getTime().toString();
+	    var params = { Bucket: time}; //name of folder to be created
+	    s3.createBucket(params, function(err, data){ 
+	    	if(err){
+	    		res.render('error', {title: 'Error', message: 'sorry, shit happens'});
+				res.end();
+	    		//email me with error
+	    	}
 
-    	add_to_queue()
-    });
+	    	add_files(s3, time)
+	    });
+	}
 
-    /* I can only add files to the folder once its made
-    * so by making this block of code a function and calling after the
-    * bucket is made ensures that they aren't out of sync
-    */
-    function add_to_queue(){
+	/* Adds files to folder */
+    function add_files(s3, time){
 
 		var num_files = 0; //keep count of number of files submitted
-		function max_files(){
-			if(num_files > 10){ //too many files
-				//delete bucket and contents
-				//render error in upload
-				res.end();
-			}
-		}
+		var files_added = []; //this will be useful if I have to delete all the files
 
 		var cb = function(err, data){ //handle most callbacks 
 				console.log(err, data);
 		}
 
-		var fs = require('fs');
-
 		var cfg = { 
-			headers: req.headers	
+			headers: req.headers,
+
+			limits: {
+				files: 2
+			}
 		}; 
 		var Busboy = require('busboy');
 		busboy = new Busboy(cfg); //parses request for files and fields from form
 
 		/* Store details of print job in a json */
+		var fs = require('fs');
 		fs.unlink('./info.json', cb); //delete prexisting copy from other print job
 		fs.appendFile('./info.json', '{\n', cb); //create json with opening curly brace
 		
@@ -65,33 +68,68 @@ var save_form = function(req, res){
 
 		/* Store form files in aws */
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype){ 
+			num_files++;
+			files_added.push({ Key: filename });
+			//max_files(s3, time);
+
 			console.log('got file' + filename); 
 			var params = {Bucket: time, Key: filename, Body: file}; 
 			s3.upload(params, function(err, data){
 	            if(err){
-	            	//render error page with error
+	            	res.render('error', {title: 'Error', message: 'sorry, shit happens'});
+				res.end();
 	            	//email me with error
+	            	console.log(err);
 	            }
-
-				num_files++;
-				max_files();
 	        });
 
 		}); 
 
 		busboy.on('finish', function(){ 
-			fs.appendFile('./info.json', '}', cb); //close json with closing curly brace
+			console.log(num_files + files_added);
+			if(num_files > 1){ //too many files
+				console.log("got into check");
+				var params = {
+					Bucket: time,
+					Delete: { Objects: files_added }
+				};
+				s3.deleteObjects(params, function(err, data) { //delete objects from folder
+					if(err){
+						//email me with error'
+						console.log(err);
+					}
+					console.log("wow even im surprised this worked");
+				});
 
-			var json = fs.createReadStream('./info.json'); //create stream for file
-			var params = {Bucket: time, Key: 'info.json', Body: json};
-			s3.upload(params, function(err, data){
-	            if(err){
-	            	//render error page with error
-	            	//email me with error
-	            }
-	        });	
+				var params = { Bucket: time };
+				s3.deleteBucket(params, function(err, data) { //delete folder
+					if(err){
+						//email me with error
+						console.log(err);
+					}
+					console.log("wow even im surprised this worked");
+				});
 
-			res.end('done')
+
+				res.render('error', { title: 'Error', message: 'too many files' });
+				res.end();
+			}
+			else{
+				fs.appendFile('./info.json', '}', cb); //close json with closing curly brace
+
+				var json = fs.createReadStream('./info.json'); //create stream for file
+				var params = {Bucket: time, Key: 'info.json', Body: json};
+				s3.upload(params, function(err, data){
+		            if(err){
+		            	res.render('error', {title: 'Error', message: 'sorry, shit happens'});
+						res.end();
+		            	//email me with error
+		            	console.log(err);
+		            }
+		        });	
+
+				res.end('done')
+			}
 		});	
 
 		req.pipe(busboy); //pipe request to busboy

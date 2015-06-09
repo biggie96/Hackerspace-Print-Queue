@@ -4,8 +4,8 @@ var app = express();
 app.use(express.static(__dirname + '/public')); //dir for static files
 
 /*setup html rendering instead of jade*/
-//app.engine('html', require('ejs').renderFile);
-//app.set('view engine', 'html');
+//app.engine('jade', require('jade'));
+app.set('view engine', 'jade');
 
 /*Handle all requests to '/'*/
 var home = require('./routes/home');
