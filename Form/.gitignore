@@ -11,4 +11,4 @@ Procfile
 aws-secret.json
 
 #swp files
-*~
+*.swp
