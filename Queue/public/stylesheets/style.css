@@ -1,0 +1,15 @@
+/* Banner */ 
+
+
+
+
+#menu-bar{
+	height: 70%;
+	width: 85%;
+	margin: 0 auto;
+	border-radius: 47px; 
+	-moz-border-radius: 47px; 
+	-webkit-border-radius: 47px; 
+	background-color: white;
+	margin-top: 0;
+}

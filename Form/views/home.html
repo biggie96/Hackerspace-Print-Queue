@@ -2,42 +2,64 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Print Job Form</title>
+		<title>Form</title>
 		<link href="stylesheets/style.css" type="text/css" rel="stylesheet">
+		<link href="stylesheets/bootstrap.css" type="text/css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Cuprum:700' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
 		<div id="banner">
 
-			<h1> Hackerspace Print Queue </h1>
-			<p> If you need to print something, fill this out and we'll tell you when its done. </p>
+			<h1> Hackerspace 3D-Printer Form</h1>
+			<p> Just fill out the info about your print below and we will contact you when it's finished!</p>
 
 		</div>
 
 		<div id="print_form">
 
 			<form action="/" method="post" enctype="multipart/form-data">
-				<p> Full Name: <input class="data" type="text" name="name"> </p>
-				<br><br>
 
-				<p> RUID: (ex. 123-45-6789) <input class="data" type="text" name="ruid"> </p>
-                                <br><br>
+				<div class="form-group">
+				<label for="name">Full Name</label>
+				<input class="form-control" type="text" name="name" placeholder="Bob Bobson">
+				</div>
 
-				<p> Email: <input class="data" type="text" name="email"> </p>
-				<br><br>
+				<div class="form-group">
+				<label for="ruid">RUID</label>
+				<input class="form-control" type="text" name="ruid" placeholder="123-45-6789">
+				</div>
 
-				<p> Notes: <input class="data" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.."> </p>
-				<br><br> 
+				<div class="form-group">
+				<label for="email">Email address</label>
+				<input class="data form-control" type="email" name="email" placeholder="Bob@Bobmail.com">
+				</div>
 
-				<p> Files (Must be in .stl format): <input class="data" type="file" name="stl_files" multiple> </p>
-				<br><br> 
+				<div class="form-group">
+				<label for="notes">Notes</label>
+				<input class="data form-control" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.."> 
+				</div>
 
-				<input type="submit" value="Submit">
+				<div class="form-group">
+				<label for="files">Files (Must be in .stl format)</label>
+				<input class="data" type="file" name="stl_files" multiple> 
+				</div>
+
+				<div style="text-align:center">  
+				<input class="btn btn-default" type="submit" value="Submit">
+				</div>
+
 			</form>
 
 
 		</div>
+
+		<div id="footer">
+
+			<p> Created by <a href="http://www.github.com/biggie96/Hackerspace-Print-Queue" target="_blank"> Olaolu Emmanuel </a> </p>
+
+		</div>
+
 	</body>
 
 </html>

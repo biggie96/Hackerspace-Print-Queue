@@ -1,23 +1,57 @@
+/* General */
+html, body{
+	height: 100%;
+	overflow: hidden;
+}
+
+
+
+
+/* Banner */
 #banner{
 	height: 20%;
 	text-align: center;
 	font-family: 'Cuprum', sans-serif;
+	font-size: 20px !important;
 }
 
 h1{
-	font-size: 80px;
+	font-size: 70px !important;
 	margin-top: 1%;
 	margin-bottom: 1%;
 }
 
+
+/* Form */
 #print_form{
-	height: 80%;
+	height: 70% !important;
+	margin-left: 30px;
+	font-size: 16px;
 }
 
-.data{
-	width: 30%;
+input.form-control{
+	width: 60% !important;
 }
-
 input[name="notes"]{
 	height: 40px;
+	margin-bottom: 25px !important;
+}
+input[type="submit"]{
+	/* The button is centered in the html */
+	width: 20% !important;
+
+}
+input[type="text"], input[type="email"]{
+	border: none !important;
+	border-radius: 0 !important;
+	border-bottom: 1px solid black !important;
+	box-shadow: none !important;
+}
+
+
+/* Footer */
+#footer{
+	height: 10%;
+	text-align: right;
+	margin-right: 2%;
 }
