@@ -14,10 +14,6 @@ var save_form = function(req, res){
 		res.render('ouput', {title: 'Error', message: 'File too big'});
 		res.end();
 	}
-	else if(parseInt(req.headers['content-length'], 10) < 1000){ //I figure if the request is less than 1kb you probably didn't upload a file
-		res.render('ouput', {message: 'No File(s) uploaded'});
-		res.end();
-	}
 	else{
 		make_folder()
 	}
