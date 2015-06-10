@@ -1,8 +1,14 @@
-# keys
+#logs
+*.log
+
+#modules
+node_modules/
+
+#heroku stuff
+Procfile
+
+#api keys
 aws-secret.json
 
-# startup scripts
-bin/
-
-#log
-*.log
+#swp files
+*.swp
