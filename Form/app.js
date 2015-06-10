@@ -12,8 +12,8 @@ var home = require('./routes/home');
 app.get('/', home.render_home);
 app.post('/', home.save_form);
 
-/*Setup instance of app locally*/
-var server = app.listen(3000, function () {
+/*Setup instance of app*/
+var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('Print Queue listening at http://%s:%s', host, port); //provides url to where the app is running
