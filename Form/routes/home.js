@@ -10,7 +10,7 @@ exports.render_home = render_home;
 * to address synchronization issues
 */
 var save_form = function(req, res){ 
-	if(parseInt(req.headers['content-length'], 10) > (10 * 1024 * 1024)){ //10mb upload limit
+	if(parseInt(req.headers['content-length'], 10) > (11 * 1024 * 1024)){ //10mb upload limit
 		res.render('ouput', {title: 'Error', message: 'File too big'});
 		res.end();
 	}
@@ -39,19 +39,12 @@ var save_form = function(req, res){
 	/* Adds files to folder */
     function add_files(s3, time){
 
-		var num_files = 0; //keep count of number of files submitted
-		var files_added = []; //this will be useful if I have to delete all the files
-
 		var cb = function(err, data){ //handle most callbacks 
 				console.log(err, data);
 		}
 
 		var cfg = { 
 			headers: req.headers,
-
-			limits: {
-				files: 4
-			}
 		}; 
 		var Busboy = require('busboy');
 		busboy = new Busboy(cfg); //parses request for files and fields from form
@@ -82,51 +75,30 @@ var save_form = function(req, res){
 
 		}); 
 
-		busboy.on('finish', function(){ 
-			console.log(num_files + files_added);
-			if(num_files > 3){ //too many files
-				console.log("got into check");
-				var params = {
-					Bucket: time,
-					Delete: { Objects: files_added }
-				};
-				s3.deleteObjects(params, function(err, data) { //delete objects from folder
-					if(err){
-						//email me with error'
-						console.log(err);
-					}
-				});
+		busboy.on('finish', function(){ 	
+			var info = fs.createReadStream('./info.txt'); //create stream for file
+			var params = {Bucket: time, Key: 'info.txt', Body: info};
+			s3.upload(params, function(err, data){
+	            if(err){
+	            	console.log(err);
+	            	res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
+					res.end();
+	            	//email me with error
+	            }
 
-				var params = { Bucket: time };
-				s3.deleteBucket(params, function(err, data) { //delete folder
-					if(err){
-						//email me with error
-						console.log(err);
-					}
-				});
+	        });	
 
-				res.render('ouput', { title: 'Error', message: 'too many files' });
-				res.end();
-			}
-			else{
-				var info = fs.createReadStream('./info.txt'); //create stream for file
-				var params = {Bucket: time, Key: 'info.txt', Body: info};
-				s3.upload(params, function(err, data){
-		            if(err){
-		            	console.log(err);
-		            	res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
-						res.end();
-		            	//email me with error
-		            }
-
-		        });	
-
-				res.render('ouput', {title: 'Success', message: 'Your print is now in our queue!'});
-				res.end();
-			}
+			res.render('ouput', {title: 'Success', message: 'Your print is now in our queue!'});
+			res.end();
 		});	
 
-		req.pipe(busboy); //pipe request to busboy
+		req.pipe(busboy); //pipe request to busboy  
 	}
 }
 exports.save_form = save_form;
+
+/*I use this function for experimenting/debugging */
+var test = function(req, res){ 
+console.log(req.params);
+}
+exports.test = test;
