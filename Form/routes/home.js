@@ -11,7 +11,11 @@ exports.render_home = render_home;
 */
 var save_form = function(req, res){ 
 	if(parseInt(req.headers['content-length'], 10) > (10 * 1024 * 1024)){ //10mb upload limit
-		res.render('error', {title: 'Max filesize exceeded', message: 'File too big'});
+		res.render('ouput', {title: 'Error', message: 'File too big'});
+		res.end();
+	}
+	else if(parseInt(req.headers['content-length'], 10) < 1000){ //I figure if the request is less than 1kb you probably didn't upload a file
+		res.render('ouput', {message: 'No File(s) uploaded'});
 		res.end();
 	}
 	else{
@@ -27,7 +31,7 @@ var save_form = function(req, res){
 	    var params = { Bucket: time}; //name of folder to be created
 	    s3.createBucket(params, function(err, data){ 
 	    	if(err){
-	    		res.render('error', {title: 'Error', message: 'sorry, shit happens'});
+	    		res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
 				res.end();
 	    		//email me with error
 	    	}
@@ -73,8 +77,8 @@ var save_form = function(req, res){
 			var params = {Bucket: time, Key: filename, Body: file}; 
 			s3.upload(params, function(err, data){
 	            if(err){
-	            	res.render('error', {title: 'Error', message: 'sorry, shit happens'});
-				res.end();
+	            	res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
+					res.end();
 	            	//email me with error
 	            	console.log(err);
 	            }
@@ -95,7 +99,6 @@ var save_form = function(req, res){
 						//email me with error'
 						console.log(err);
 					}
-					console.log("wow even im surprised this worked");
 				});
 
 				var params = { Bucket: time };
@@ -104,11 +107,9 @@ var save_form = function(req, res){
 						//email me with error
 						console.log(err);
 					}
-					console.log("wow even im surprised this worked");
 				});
 
-
-				res.render('error', { title: 'Error', message: 'too many files' });
+				res.render('ouput', { title: 'Error', message: 'too many files' });
 				res.end();
 			}
 			else{
@@ -117,15 +118,15 @@ var save_form = function(req, res){
 				s3.upload(params, function(err, data){
 		            if(err){
 		            	console.log(err);
-
-		            	res.render('error', {title: 'Error', message: 'sorry, shit happens'});
+		            	res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
 						res.end();
 		            	//email me with error
 		            }
 
 		        });	
 
-				res.end('done')
+				res.render('ouput', {title: 'Success', message: 'Your print is now in our queue!'});
+				res.end();
 			}
 		});	
 

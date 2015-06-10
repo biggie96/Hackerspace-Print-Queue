@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title!= title
+    link(href='stylesheets/style.css', type='text/css', rel='stylesheet')
+    link(href='stylesheets/bootstrap.css', type='text/css', rel='stylesheet')
+    link(href='http://fonts.googleapis.com/css?family=Cuprum:700', rel='stylesheet', type='text/css')
+
+  body
+    #banner
+      #logo
+        img(src='images/hspacebanner.jpg')
+      div
+        h1  3D-Printer Form
+        p
+          | Just fill out the info about your print below and we will contact you when it&apos;s finished!
+
+    #print_form  
+      h1!= message
+      a(href="https://hackerspace-print-form.herokuapp.com/") Back
+
+
+    #footer
+      p
+        | Created by 
+        a(href='http://www.github.com/biggie96/Hackerspace-Print-Queue', target='_blank')  Olaolu Emmanuel 

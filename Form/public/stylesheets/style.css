@@ -2,9 +2,8 @@
 html, body{
 	height: 100%;
 	overflow: hidden;
+	color: black !important;
 }
-
-
 
 
 /* Banner */
@@ -13,34 +12,63 @@ html, body{
 	text-align: center;
 	font-family: 'Cuprum', sans-serif;
 	font-size: 20px !important;
+	margin-bottom: 20px !important;
+}
+
+#logo{
+	float: left;
+}
+
+img{
+	height: 130px !important;
+	width: 500px !important;
+}
+
+#logo-text{
+	float: right;
+	height: 100% !important;
 }
 
 h1{
 	font-size: 70px !important;
 	margin-top: 1%;
-	margin-bottom: 1%;
+	margin-bottom: 0 !important;
+	color: #D63D40 !important;
 }
 
 
 /* Form */
 #print_form{
 	height: 70% !important;
-	margin-left: 30px;
+	padding-left: 30px;
+	padding-top: 10px;
 	font-size: 16px;
+	background-color: rgb(205, 197, 183);
+}
+
+input{
+	background-color: rgb(205, 197, 183) !important;
 }
 
 input.form-control{
 	width: 60% !important;
 }
+
 input[name="notes"]{
 	height: 40px;
 	margin-bottom: 25px !important;
 }
+
 input[type="submit"]{
 	/* The button is centered in the html */
 	width: 20% !important;
-
+	border-color: black;
 }
+input[type="submit"]:hover{
+	border-color: black !important;
+	background-color: #D63D40 !important;
+}
+
 input[type="text"], input[type="email"]{
 	border: none !important;
 	border-radius: 0 !important;
@@ -53,5 +81,6 @@ input[type="text"], input[type="email"]{
 #footer{
 	height: 10%;
 	text-align: right;
-	margin-right: 2%;
+	padding-right: 2%;
+	background-color: #404040;
 }
