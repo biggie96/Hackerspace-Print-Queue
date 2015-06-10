@@ -9,3 +9,6 @@ Procfile
 
 #api keys
 aws-secret.json
+
+#swp files
+*~
