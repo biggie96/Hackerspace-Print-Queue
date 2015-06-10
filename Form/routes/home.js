@@ -11,7 +11,7 @@ exports.render_home = render_home;
 */
 var save_form = function(req, res){ 
 	if(parseInt(req.headers['content-length'], 10) > (11 * 1024 * 1024)){ //10mb upload limit
-		res.render('ouput', {title: 'Error', message: 'File too big'});
+		res.render('output', {title: 'Error', message: 'File too big'});
 		res.end();
 	}
 	else{
@@ -27,7 +27,7 @@ var save_form = function(req, res){
 	    var params = { Bucket: time}; //name of folder to be created
 	    s3.createBucket(params, function(err, data){ 
 	    	if(err){
-	    		res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
+	    		res.render('output', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
 				res.end();
 	    		//email me with error
 	    	}
@@ -66,7 +66,7 @@ var save_form = function(req, res){
 			var params = {Bucket: time, Key: filename, Body: file}; 
 			s3.upload(params, function(err, data){
 	            if(err){
-	            	res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
+	            	res.render('output', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
 					res.end();
 	            	//email me with error
 	            	console.log(err);
@@ -81,14 +81,14 @@ var save_form = function(req, res){
 			s3.upload(params, function(err, data){
 	            if(err){
 	            	console.log(err);
-	            	res.render('ouput', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
+	            	res.render('output', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
 					res.end();
 	            	//email me with error
 	            }
 
 	        });	
 
-			res.render('ouput', {title: 'Success', message: 'Your print is now in our queue!'});
+			res.render('output', {title: 'Success', message: 'Your print is now in our queue!'});
 			res.end();
 		});	
 
