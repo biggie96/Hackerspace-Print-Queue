@@ -5,8 +5,14 @@ app.use(express.static(__dirname + '/public')); //dir for static files
 app.set('view engine', 'jade');
 
 /* Handle all requests to '/' */
-var home = require('./routes/home');
-app.get('/', home.render_home);
+var login = require('./routes/login');
+app.get('/', login.login); //login page
+app.post('/', login.validate); //validate password
+
+/* Handle all requests to '/data' */
+var data = require('./routes/data');
+//app.get('/data', data.populate); //populate queue
+
 
 /*Start an instance of app*/
 var server = app.listen(process.env.PORT || 3000, function () {

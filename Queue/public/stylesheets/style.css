@@ -1,15 +1,104 @@
-/* Banner */ 
-
-
-
-
-#menu-bar{
-	height: 70%;
-	width: 85%;
-	margin: 0 auto;
-	border-radius: 47px; 
-	-moz-border-radius: 47px; 
-	-webkit-border-radius: 47px; 
-	background-color: white;
-	margin-top: 0;
+/******************************************************************* GENERAL ************************************************/
+html, body{
+	height: 100%;
+	overflow: hidden;
+	color: black !important;
 }
+
+
+/* Banner */
+#banner{
+	height: 20%;
+	text-align: center;
+	font-family: 'Cuprum', sans-serif;
+	font-size: 20px !important;
+	margin-bottom: 20px !important;
+}
+
+#logo{
+	float: left;
+}
+
+img{
+	height: 130px !important;
+	width: 500px !important;
+}
+
+#logo-text{
+	float: right;
+	height: 100% !important;
+}
+
+h1{
+	font-size: 70px !important;
+	margin-top: 1%;
+	margin-bottom: 0 !important;
+	color: #D63D40 !important;
+}
+
+/* Footer */
+#footer{
+	height: 10%;
+	text-align: right;
+	padding-right: 2%;
+	background-color: #404040;
+}
+
+/******************************************************************* Login Page ************************************************/
+
+/* Login Prompt */
+#print_form{
+	height: 70% !important;
+	padding-left: 30px;
+	padding-top: 10px;
+	font-size: 16px;
+	background-color: rgb(205, 197, 183);
+	width: 100% !important;
+}
+
+input{
+	background-color: rgb(205, 197, 183) !important;
+}
+
+
+/* Password Field */
+input.form-control{
+	width: 30% !important;
+}
+input[type=password]{
+	border-radius: 5px !important;
+	border: 1px solid black !important;
+	box-shadow: none !important;
+}
+input[type="submit"]{
+	/* The button is centered in the html */
+	width: 20% !important;
+	border-color: black;
+}
+input[type="submit"]:hover{
+	border-color: black !important;
+	background-color: #D63D40 !important;
+}
+
+/******************************************************************* Queue ****************************************************/
+
+#next-up, #whole-queue{
+	border: 1px solid black;
+	display: inline;
+	width: 47% !important;
+	height: 90% !important;
+	font-size: 30px !important;
+}
+
+/* Next in queue */
+#next-up{
+	float: left;
+}
+
+
+/* Entire queue */
+#whole-queue{
+	float: right;
+}
+
+
