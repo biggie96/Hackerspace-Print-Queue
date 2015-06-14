@@ -19,9 +19,7 @@
     "node": "v0.10.38"
   },
   "dependencies": {
-    "browserify": "^10.2.4",
     "busboy": "^0.2.9",
-    "express": "~4.12.4",
-    "jade": "^1.9.2"
+    "express": "^4.12.4"
   }
 }

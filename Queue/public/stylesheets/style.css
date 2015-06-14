@@ -38,10 +38,13 @@ h1{
 
 /* Footer */
 #footer{
-	height: 10%;
 	text-align: right;
 	padding-right: 2%;
 	background-color: #404040;
+	position: fixed;
+		bottom: 0px;
+		height: 4%;
+		width: 100%;
 }
 
 /******************************************************************* Login Page ************************************************/
@@ -49,8 +52,6 @@ h1{
 /* Login Prompt */
 #print_form{
 	height: 70% !important;
-	padding-left: 30px;
-	padding-top: 10px;
 	font-size: 16px;
 	background-color: rgb(205, 197, 183);
 	width: 100% !important;
@@ -81,24 +82,43 @@ input[type="submit"]:hover{
 }
 
 /******************************************************************* Queue ****************************************************/
-
-#next-up, #whole-queue{
-	border: 1px solid black;
-	display: inline;
-	width: 47% !important;
-	height: 90% !important;
-	font-size: 30px !important;
+h2{
+	font-family: 'Cuprum', sans-serif !important;
+	font-size: 40px !important;
 }
 
-/* Next in queue */
-#next-up{
+#queue{
+	width: 80% !important;
+	height: 100% !important;
+	font-size: 25px !important;
 	float: left;
+	padding-left: 10px;
 }
 
+#all_jobs{
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+	list-style-position: inside;
+	padding-left: 0px;
+	width: 90% !important;
+}
 
-/* Entire queue */
-#whole-queue{
+.job_title{
+	border-bottom: 1px solid black;
+}
+.job_title:hover{
+	background-color: #D63D40;
+}
+
+.description{
+	display: none;
+	font-size: 20px;
+}
+
+#notes{
 	float: right;
+	width: 20% !important;
+	height: 100% !important;
+	border-left: 1px dotted black;
 }
-
-

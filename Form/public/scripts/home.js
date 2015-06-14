@@ -12,8 +12,12 @@ function save_form(){
 		$('#print_form').html(response);
 	}
 
+	var percentage = 0;
 	function progress(e, position, total, percent){
-		$('figcaption').text(String(percent) + '%');
+		if(percent > percentage){ //accounts for random percents that seem to show up
+			$('figcaption').text(String(percent) + '%');
+			percentage = percent;
+		}
 	}
 
 	$('form').submit(function(e){ 

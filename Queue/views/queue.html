@@ -5,7 +5,7 @@
 		<title>Queue</title>
 		<link href="stylesheets/style.css" type="text/css" rel="stylesheet">
 		<link href="stylesheets/bootstrap.css" type="text/css" rel="stylesheet">
-		<link href='http://fonts.googleapis.com/css?family=Cuprum:700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Cuprum:700' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
@@ -24,35 +24,68 @@
 
 		<div id="print_form">
 
-			<div id="next-up">
+			<div id="queue">
 
 				<div style="text-align:center">
-				<h2> Next Up: </h2>
+				<h2> Queue </h2>
+				</div>
+
+				<ol id="all_jobs">
+
+					<div class="job active">
+
+						<li class="job_title"> things </li>
+						<div class="description"> 
+
+							<div class="info">
+								<p>Name: the name </p> 
+								<p> ruid: 21212121 </p>
+								<p> notes: onvefev fe fd jkfd jkfvjk fnjjjjjjjjjjjj </p>
+							</div>
+
+							<div class="action">
+								<button>Done</button>
+								<button>Remove</button>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="job">
+
+						<li class="job_title"> things </li>
+						<div class="description"> 
+
+							<div class="info">
+								<p>Name: the name </p> 
+								<p> ruid: 21212121 </p>
+								<p> notes: onvefev fe fd jkfd jkfvjk fnjjjjjjjjjjjj </p>
+							</div>
+
+							<div class="action">
+								<button>Done</button>
+								<button>Remove</button>
+							</div>
+
+						</div>
+
+					</div>
+
+				</ol>
+
+			</div>
+
+			<div id="notes">
+
+				<div style="text-align:center">
+				<h2> Notes </h2>
 				</div>
 
 				<ul id="info">
 
-					<li> things </li>
-					<li> more things </li>
-
-					<button class="btn btn-default"> Download Files </button>
-					<button class="btn btn-default"> Done </button>
-
-				</ul>
-
-			</div>
-
-			<div id="whole-queue">
-
-				<div style="text-align:center">
-				<h2> Whole Queue: </h2>
-				</div>
-
-				<ul id="list">
-
-					<li> things </li>
-					<li> more things </li>
-
+					<li> Once a job is completed, click done, input your name, and an email will be sent to the recipient. </li>
+					<li> To remove a job, click remove and enter yes to confirm the removal. </li>
 
 				</ul>
 

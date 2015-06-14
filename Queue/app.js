@@ -6,7 +6,7 @@ app.set('view engine', 'jade');
 
 /* Handle all requests to '/' */
 var login = require('./routes/login');
-app.get('/', login.login); //login page
+app.get('/', login.test); //login page
 app.post('/', login.validate); //validate password
 
 /* Handle all requests to '/data' */

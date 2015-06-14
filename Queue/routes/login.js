@@ -27,3 +27,9 @@ var validate = function(req, res){
 	req.pipe(busboy); //pipe request to busboy
 }
 exports.validate = validate;
+
+/* This function is for testing/debugging purposes */
+var test = function(req, res){
+	res.sendFile(require('path').join(__dirname, '/../views/queue.html'));
+}
+exports.test = test;
