@@ -5,14 +5,14 @@
 		<title>Form</title>
 		<link href="stylesheets/style.css" type="text/css" rel="stylesheet">
 		<link href="stylesheets/bootstrap.css" type="text/css" rel="stylesheet">
-		<link href='http://fonts.googleapis.com/css?family=Cuprum:700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Cuprum:700' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
 		<div id="banner">
 
 			<div id="logo">
-				<img src="images/hspacebanner.jpg">
+				<img src="images/hspacebanner.jpg" id="logo_pic">
 			</div>
 
 			<div id-"logo-text">
@@ -24,26 +24,30 @@
 
 		<div id="print_form">
 
-			<form action="/" method="post" enctype="multipart/form-data">
+			<form role="form" action="/upload" method="post" enctype="multipart/form-data">
+
 
 				<div class="form-group">
 				<label for="name">Full Name</label>
-				<input class="form-control" type="text" name="name" placeholder="Bob Bobson" id="form_start">
+				<input class="form-control" type="text" name="name" placeholder="Bob Bobson" maxlength="30">
 				</div>
+				<img src="images/bad.png" class="valid" id="valid_name">
 
 				<div class="form-group">
 				<label for="ruid">RUID</label>
-				<input class="form-control" type="text" name="ruid" placeholder="123-45-6789">
+				<input class="form-control" type="text" name="ruid" placeholder="123-45-6789" maxlength="11">
 				</div>
+				<img src="images/bad.png" class="valid" id="valid_ruid">
 
 				<div class="form-group">
 				<label for="email">Email address</label>
-				<input class="data form-control" type="email" name="email" placeholder="Bob@Bobmail.com">
+				<input class="data form-control" type="email" name="email" placeholder="Bob@Bobmail.com" maxlength="40">
 				</div>
+				<!-- email validation is taken care of by the browser -->
 
 				<div class="form-group">
 				<label for="notes">Notes *Optional</label>
-				<input class="data form-control" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.."> 
+				<input class="data form-control" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.." maxlength="150"> 
 				</div>
 
 				<div class="form-group">
@@ -57,6 +61,11 @@
 
 			</form>
 
+			<figure style="text-align:center">
+				<img src="images/ajax-loader.gif" id="load_gif">
+				<figcaption> </figcaption>
+			</figure>
+
 
 		</div>
 
@@ -67,6 +76,7 @@
 		</div>
 
 	<script src="scripts/jquery-1.11.3.js"></script>
+	<script src="scripts/jquery.form.min.js"></script>
 	<script src="scripts/home.js"></script>
 	</body>
 

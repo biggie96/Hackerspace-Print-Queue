@@ -10,7 +10,7 @@ app.set('view engine', 'jade');
 /*Handle all requests to '/'*/
 var home = require('./routes/home');
 app.get('/', home.render_home);
-app.post('/', home.save_form);
+app.post('/upload', home.save_form);
 
 /*Setup instance of app*/
 var server = app.listen(process.env.PORT || 3000, function () {
