@@ -51,7 +51,11 @@ var save_form = function(req, res){
 		fs.unlink('./info.txt', cb); //delete prexisting copy from other print job
 		
 		busboy.on('field', function(fieldname, val){ //add field data to txt file
-			var field_data = fieldname + ': ' + val + '\n';
+			if(val == ""){
+				return;
+			}
+			
+			var field_data = val + '\n';
 			fs.appendFile('./info.txt', field_data, cb);
 		}); 
 

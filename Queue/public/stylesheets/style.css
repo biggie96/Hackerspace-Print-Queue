@@ -116,6 +116,12 @@ h2{
 	font-size: 20px;
 }
 
+.action img{
+	display: none;
+	height: 40px !important;
+	width: 40px !important;
+}
+
 #notes{
 	float: right;
 	width: 20% !important;

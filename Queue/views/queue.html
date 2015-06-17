@@ -32,45 +32,27 @@
 
 				<ol id="all_jobs">
 
-					<div class="job active">
+				<!-------------- Template structure for queue ---------->
+					<!--div class="job active">
 
 						<li class="job_title"> things </li>
 						<div class="description"> 
 
 							<div class="info">
-								<p>Name: the name </p> 
 								<p> ruid: 21212121 </p>
+								<p> email: sddssd </p>
 								<p> notes: onvefev fe fd jkfd jkfvjk fnjjjjjjjjjjjj </p>
 							</div>
 
 							<div class="action">
 								<button>Done</button>
 								<button>Remove</button>
+								<img src="images/ajax-loader.gif">
 							</div>
 
 						</div>
 
-					</div>
-
-					<div class="job">
-
-						<li class="job_title"> things </li>
-						<div class="description"> 
-
-							<div class="info">
-								<p>Name: the name </p> 
-								<p> ruid: 21212121 </p>
-								<p> notes: onvefev fe fd jkfd jkfvjk fnjjjjjjjjjjjj </p>
-							</div>
-
-							<div class="action">
-								<button>Done</button>
-								<button>Remove</button>
-							</div>
-
-						</div>
-
-					</div>
+					</div -->
 
 				</ol>
 
@@ -85,7 +67,7 @@
 				<ul id="info">
 
 					<li> Once a job is completed, click done, input your name, and an email will be sent to the recipient. </li>
-					<li> To remove a job, click remove and enter yes to confirm the removal. </li>
+					<li> To remove a job, click remove and enter its id to confirm the removal. </li>
 
 				</ul>
 
@@ -100,6 +82,7 @@
 		</div>
 
 	<script src="scripts/jquery-1.11.3.js"></script>
+	<script src="scripts/jquery.form.min.js"></script>
 	<script src="scripts/queue.js"></script>
 	</body>
 

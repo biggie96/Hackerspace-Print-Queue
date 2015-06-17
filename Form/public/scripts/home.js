@@ -21,7 +21,6 @@ function save_form(){
 	}
 
 	$('form').submit(function(e){ 
-		console.log('got submit')
 		var options = {
 		resetForm: true,
 		beforeSubmit: start,
