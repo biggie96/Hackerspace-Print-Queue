@@ -12,6 +12,7 @@ app.post('/', login.validate); //validate password
 /* Handle all requests to '/data' */
 var data = require('./routes/data');
 app.get('/data', data.populate); //populate queue
+app.delete('/data/:id', data.delete_job); //populate queue
 
 
 /*Start an instance of app*/

@@ -104,6 +104,11 @@ h2{
 	width: 90% !important;
 }
 
+#main_loading{
+	width: 50% !important; 
+	height: 150px !important;
+}
+
 .job_title{
 	border-bottom: 1px solid black;
 }
@@ -116,10 +121,10 @@ h2{
 	font-size: 20px;
 }
 
-.action img{
+.loading{
 	display: none;
-	height: 40px !important;
-	width: 40px !important;
+	height: 20px !important;
+	width: 20px !important;
 }
 
 #notes{
@@ -128,3 +133,4 @@ h2{
 	height: 100% !important;
 	border-left: 1px dotted black;
 }
+

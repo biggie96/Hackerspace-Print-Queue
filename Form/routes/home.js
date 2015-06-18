@@ -56,12 +56,11 @@ var save_form = function(req, res){
 			}
 			
 			var field_data = val + '\n';
-			fs.appendFile('./info.txt', field_data, cb);
+			fs.appendFileSync('./info.txt', field_data);
 		}); 
 
 		/* Store form files in aws */
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype){ 
-			console.log('got file' + filename); 
 			var params = {Bucket: time, Key: filename, Body: file}; 
 			s3.upload(params, function(err, data){
 	            if(err){

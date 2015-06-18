@@ -21,6 +21,8 @@ function save_form(){
 	}
 
 	$('form').submit(function(e){ 
+		e.preventDefault();
+		
 		var options = {
 		resetForm: true,
 		beforeSubmit: start,
