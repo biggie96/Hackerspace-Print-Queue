@@ -20,10 +20,11 @@ function save_form(){
 		}
 	}
 
-	$('form').submit(function(e){ 
+	$('form').unbind('submit').bind('submit', function(e){ 
 		e.preventDefault();
 		
 		var options = {
+		type: "POST",
 		resetForm: true,
 		beforeSubmit: start,
 		success: done,
@@ -33,6 +34,21 @@ function save_form(){
 
 		return false; //prevents page navigation and default browser submit
 	});
+
+	/*$('form').submit(function(e){ 
+		e.preventDefault();
+		
+		var options = {
+		type: "POST",
+		resetForm: true,
+		beforeSubmit: start,
+		success: done,
+		uploadProgress: progress
+		};
+		$(this).ajaxSubmit(options); //setup ajax request
+
+		return false; //prevents page navigation and default browser submit
+	});*/
 }
 
 /* This function ensures all required fields have valid inputs before submitting */
