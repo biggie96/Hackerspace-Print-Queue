@@ -14,6 +14,9 @@ var data = require('./routes/data');
 app.get('/data', data.populate); //populate queue
 app.delete('/data/:id', data.delete_job); //populate queue
 
+/* Handle all requests to '/download' */
+var download = require('./routes/download');
+app.get('/download/:id', download.download);
 
 /*Start an instance of app*/
 var server = app.listen(process.env.PORT || 3000, function () {

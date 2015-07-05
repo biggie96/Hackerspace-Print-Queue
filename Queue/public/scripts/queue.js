@@ -1,6 +1,6 @@
 /* This function displays the description for the active list item */
 function active_item(){
-	$('#all_jobs').on('click', '.job_title', function(){ 
+	$('#all_jobs').on('click', '.job_title', function(){
 		console.log('here');
 		if($(this).hasClass('active')){ // its already active so now I'll hide the description and deactivate it
 			$(this).removeClass('active');
@@ -20,7 +20,7 @@ function active_item(){
 
 /* This function remove an item from the queue and reloads it */
 function remove(){
-	$('#all_jobs').on('click', '.remove', function(){ 
+	$('#all_jobs').on('click', '.remove', function(){
 		$(this).siblings('.loading').show();
 
 		var url = '/data/' + $(this).parent().siblings('.info').children('.id').text().substring(4);
@@ -28,7 +28,7 @@ function remove(){
 		var done = function(){
 			$(this).siblings('.loading').hide();
 
-			populate_page();
+			location.reload(true);
 		}
 
 		var settings = {
@@ -39,6 +39,19 @@ function remove(){
 
 	});
 }
+
+/* This function requests a .zip of the print job to the browser */
+function download(){
+	$('#all_jobs').on('click', '.download', function(){
+		$(this).siblings('.loading').show();
+
+		var url = '/download/' + $(this).parent().siblings('.info').children('.id').text().substring(4);
+		window.open(url);
+
+		$(this).siblings('.loading').hide();
+	});
+}
+
 
 /* This functions populates the queue */
 function populate_page(){
@@ -74,7 +87,7 @@ function populate_page(){
 						queue += '<p class="id">ID: ' + String(times[i]) + '</p>';
 					queue += '</div>';
 
-					queue += '<div class="action">';  
+					queue += '<div class="action">';
 						queue += '<button class="download">Download Files</button>';
 						queue += '<button class="done">Done</button>';
 						queue += '<button class="remove">Remove</button>';
@@ -99,6 +112,7 @@ function populate_page(){
 
 	active_item();
 	remove();
+	download();
 }
 
 $(document).ready(populate_page);

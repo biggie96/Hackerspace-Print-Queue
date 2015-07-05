@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "a": "^0.4.8",
+    "archiver": "^0.14.4",
     "async": "^1.2.1",
     "aws-sdk": "^2.1.34",
     "busboy": "^0.2.9",
-    "express": "^4.12.4"
+    "express": "^4.12.4",
+    "jade": "^1.11.0"
   }
 }

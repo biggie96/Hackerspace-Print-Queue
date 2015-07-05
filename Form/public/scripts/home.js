@@ -34,21 +34,6 @@ function save_form(){
 
 		return false; //prevents page navigation and default browser submit
 	});
-
-	/*$('form').submit(function(e){ 
-		e.preventDefault();
-		
-		var options = {
-		type: "POST",
-		resetForm: true,
-		beforeSubmit: start,
-		success: done,
-		uploadProgress: progress
-		};
-		$(this).ajaxSubmit(options); //setup ajax request
-
-		return false; //prevents page navigation and default browser submit
-	});*/
 }
 
 /* This function ensures all required fields have valid inputs before submitting */
@@ -57,7 +42,7 @@ function field_validate(){
 
 	/* these two booleans represent validity of field inputs */
 	var name = false;
-	var ruid = false;
+	var netID = false;
 
 	/* validates name field */
 	$('input[name=name]').keyup(function(e){ 
@@ -71,31 +56,14 @@ function field_validate(){
 		}
 	});
 
-	/* validates ruid field */
-	$('input[name=ruid]').keyup(function(e){ 
-		if($(this).val().length < 11){
-			$('#valid_ruid').prop('src', 'images/bad.png');
-			ruid = false;
-			return;
-		}
-
-		var pieces = $(this).val().split('-');
-		if(pieces.length == 3){
-			var str = pieces[0] + pieces[1] + pieces[2];
-
-			for(var i = 0; i < str.length; i++){
-				if(isNaN(str[i])){
-					$('#valid_ruid').prop('src', 'images/bad.png');
-					ruid = false;
-					return;
-				}
-			}
-
-			$('#valid_ruid').prop('src', 'images/good.png');
+	/* validates netID field */
+	$('input[name=netID]').keyup(function(e){ 
+		if($(this).val().replace(/ /g,'').length > 2){
+			$('#valid_netID').prop('src', 'images/good.png');
 			ruid = true;
 		}
 		else{
-			$('#valid_ruid').prop('src', 'images/bad.png');
+			$('#valid_netID').prop('src', 'images/bad.png');
 			ruid = false;
 		}
 

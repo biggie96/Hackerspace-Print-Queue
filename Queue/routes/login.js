@@ -6,9 +6,9 @@ exports.login = login;
 
 /* This function validates the password */
 var validate = function(req, res){
-	var cfg = { 
+	var cfg = {
 		headers: req.headers,
-	}; 
+	};
 	var Busboy = require('busboy');
 	busboy = new Busboy(cfg); //parses request for files and fields from form
 
@@ -20,7 +20,7 @@ var validate = function(req, res){
 				res.render('output', {title: 'Incorrect', message: 'Password is incorrect, please try again.'});
 				res.end();
 			}
-	}); 
+	});
 
 	busboy.on('finish', function(){ });
 
