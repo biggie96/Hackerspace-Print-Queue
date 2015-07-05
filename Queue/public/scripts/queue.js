@@ -38,6 +38,11 @@ function remove(id){
 
 	/* delete an item when clicked on */
 	$('#all_jobs').on('click', '.remove', function(){
+		var sure = window.confirm("Are you sure?");
+		if(!sure){
+			return;
+		}
+
 		$(this).siblings('.loading').show();
 
 		var url = '/queue?id=' + $(this).parent().siblings('.info').children('.id').text().substring(4);
@@ -71,6 +76,11 @@ function download(){
 /* This function notifies the recipient that their print is finished */
 function notify(){
 	$('#all_jobs').on('click', '.done', function(){
+		var sure = window.confirm("Are you sure?");
+		if(!sure){
+			return;
+		}
+
 		var id = $(this).parent().siblings('.info').children('.id').text().substring(4);
 		var name = $(this).parent().parent().siblings('.job_title').text();
 		var email = $(this).parent().siblings('.info').children('.email').text().substring(7);

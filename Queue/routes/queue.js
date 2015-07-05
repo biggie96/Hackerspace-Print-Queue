@@ -51,6 +51,7 @@ var populate = function(req, res){
               /* Add info to data to be returned to client */
               var info = fs.readFileSync(tmp, 'utf8').split('\n');
               queue_data[params['Bucket']] = { name: info[0], ruid: info[1], email: info[2], notes: info[3] };
+              fs.unlink(tmp, function(err, data){ if(err) console.log('@unlink: ' + err) }); //delete local copy
               cb(null);
             }
         });
