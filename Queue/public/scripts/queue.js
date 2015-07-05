@@ -19,11 +19,28 @@ function active_item(){
 }
 
 /* This function remove an item from the queue and reloads it */
-function remove(){
+function remove(id){
+	if(id != undefined){
+		var url = '/data/' + id;
+
+		var done = function(){
+			$(this).siblings('.loading').hide();
+
+			location.reload(true);
+		}
+
+		var settings = {
+		method: 'DELETE',
+		success: done
+		};
+		$.ajax(url, settings);
+	}
+
 	$('#all_jobs').on('click', '.remove', function(){
 		$(this).siblings('.loading').show();
 
-		var url = '/data/' + $(this).parent().siblings('.info').children('.id').text().substring(4);
+		var url = '/data/';
+		url += (id == null) ? $(this).parent().siblings('.info').children('.id').text().substring(4) : id;
 
 		var done = function(){
 			$(this).siblings('.loading').hide();
@@ -49,6 +66,34 @@ function download(){
 		window.open(url);
 
 		$(this).siblings('.loading').hide();
+	});
+}
+
+
+/* This function notifies the recipient that their print is finished */
+function notify(){
+	$('#all_jobs').on('click', '.done', function(){
+		var employee = prompt('Please input the employee who completed this print.');
+		var id = $(this).parent().siblings('.info').children('.id').text().substring(4);
+		var name = $(this).parent().siblings('.info').children('.name').text().substring(6);
+		var email = $(this).parent().siblings('.info').children('.email').text().substring(7);
+
+		$(this).siblings('.loading').show();
+
+		var url = '/printjob?' + 'name=' + name + '&employee=' + employee + '&email=' + email;
+
+		var done = function(){
+			console.log('done');
+			remove(id);
+			$(this).siblings('.loading').hide();
+			remove(id);
+		}
+
+		var settings = {
+		method: 'POST',
+		success: done
+		};
+		$.ajax(url, settings);
 	});
 }
 
@@ -113,6 +158,7 @@ function populate_page(){
 	active_item();
 	remove();
 	download();
+	notify();
 }
 
 $(document).ready(populate_page);

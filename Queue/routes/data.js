@@ -79,8 +79,10 @@ var delete_job = function(req, res){
                 return res.end();
               }
 
-              return res.send({});
+              res.send({});
           });
+
+          return
         }
 
 

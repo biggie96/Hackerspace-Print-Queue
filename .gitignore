@@ -9,6 +9,7 @@ Procfile
 
 #api keys
 aws-secret.json
+sendgrid-api.cfg
 
 #swp files
 *.swp

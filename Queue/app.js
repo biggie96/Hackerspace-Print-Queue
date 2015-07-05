@@ -18,6 +18,10 @@ app.delete('/data/:id', data.delete_job); //populate queue
 var download = require('./routes/download');
 app.get('/download/:id', download.download);
 
+/* Handle all requests to '/printjob' */
+var printjob = require('./routes/printjob');
+app.post('/printjob', printjob.notify);
+
 /*Start an instance of app*/
 var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
