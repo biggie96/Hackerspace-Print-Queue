@@ -4,23 +4,17 @@ var app = express();
 app.use(express.static(__dirname + '/public')); //dir for static files
 app.set('view engine', 'jade');
 
-/* Handle all requests to '/' */
+/* Handle all requests to login page */
 var login = require('./routes/login');
-app.get('/', login.test); //login page
+app.get('/', login.login); //login page
 app.post('/', login.validate); //validate password
 
-/* Handle all requests to '/data' */
-var data = require('./routes/data');
-app.get('/data', data.populate); //populate queue
-app.delete('/data/:id', data.delete_job); //populate queue
-
-/* Handle all requests to '/download' */
-var download = require('./routes/download');
-app.get('/download/:id', download.download);
-
-/* Handle all requests to '/printjob' */
-var printjob = require('./routes/printjob');
-app.post('/printjob', printjob.notify);
+/* Handle all requests to queue page */
+var queue = require('./routes/queue');
+app.get('/queue', queue.populate); //populate queue
+app.delete('/queue', queue.remove_job); //remove print
+app.post('/queue', queue.notify); //email recipient
+app.get('/queue/download', queue.download); //download files in print job
 
 /*Start an instance of app*/
 var server = app.listen(process.env.PORT || 3000, function () {

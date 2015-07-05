@@ -12,8 +12,10 @@ var validate = function(req, res){
 	var Busboy = require('busboy');
 	busboy = new Busboy(cfg); //parses request for files and fields from form
 
+	var password = require('fs').readFileSync('./queue-password.cfg', 'utf8').split('\n')[0]; //gets password
+
 	busboy.on('field', function(fieldname, val){ //get password input
-			if(val == ""){
+			if(val == password){
 				res.sendFile(require('path').join(__dirname, '/../views/queue.html'));
 			}
 			else{

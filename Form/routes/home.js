@@ -48,8 +48,8 @@ var save_form = function(req, res){
 
 		/* Store details of print job in a txt file */
 		var fs = require('fs');
-		fs.unlink('./info.txt', cb); //delete prexisting copy from other print job
-		
+		fs.unlinkSync('./info.txt'); //delete prexisting copy from other print job
+
 		busboy.on('field', function(fieldname, val){ //add field data to txt file
 			if(val == ""){
 				return;

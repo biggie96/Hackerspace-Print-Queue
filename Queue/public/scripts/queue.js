@@ -20,12 +20,12 @@ function active_item(){
 
 /* This function remove an item from the queue and reloads it */
 function remove(id){
+	/* this check allows an item to be deleted even if it wasnt clicked on  */
 	if(id != undefined){
-		var url = '/data/' + id;
+		var url = '/queue?id=' + id;
 
 		var done = function(){
 			$(this).siblings('.loading').hide();
-
 			location.reload(true);
 		}
 
@@ -36,15 +36,14 @@ function remove(id){
 		$.ajax(url, settings);
 	}
 
+	/* delete an item when clicked on */
 	$('#all_jobs').on('click', '.remove', function(){
 		$(this).siblings('.loading').show();
 
-		var url = '/data/';
-		url += (id == null) ? $(this).parent().siblings('.info').children('.id').text().substring(4) : id;
+		var url = '/queue?id=' + $(this).parent().siblings('.info').children('.id').text().substring(4);
 
 		var done = function(){
 			$(this).siblings('.loading').hide();
-
 			location.reload(true);
 		}
 
@@ -53,7 +52,6 @@ function remove(id){
 		success: done
 		};
 		$.ajax(url, settings);
-
 	});
 }
 
@@ -62,8 +60,8 @@ function download(){
 	$('#all_jobs').on('click', '.download', function(){
 		$(this).siblings('.loading').show();
 
-		var url = '/download/' + $(this).parent().siblings('.info').children('.id').text().substring(4);
-		window.open(url);
+		var url = '/queue/download?id=' + $(this).parent().siblings('.info').children('.id').text().substring(4);
+		window.open(url); //open download window
 
 		$(this).siblings('.loading').hide();
 	});
@@ -73,20 +71,17 @@ function download(){
 /* This function notifies the recipient that their print is finished */
 function notify(){
 	$('#all_jobs').on('click', '.done', function(){
-		var employee = prompt('Please input the employee who completed this print.');
 		var id = $(this).parent().siblings('.info').children('.id').text().substring(4);
-		var name = $(this).parent().siblings('.info').children('.name').text().substring(6);
+		var name = $(this).parent().parent().siblings('.job_title').text();
 		var email = $(this).parent().siblings('.info').children('.email').text().substring(7);
 
 		$(this).siblings('.loading').show();
 
-		var url = '/printjob?' + 'name=' + name + '&employee=' + employee + '&email=' + email;
+		var url = '/queue?' + 'name=' + name + '&email=' + email;
 
 		var done = function(){
-			console.log('done');
-			remove(id);
 			$(this).siblings('.loading').hide();
-			remove(id);
+			remove(id); //remove item
 		}
 
 		var settings = {
@@ -108,6 +103,7 @@ function populate_page(){
 
 		var times = [];
 
+		/* get time created so the queue can be sorted */
 		for(var time in res){
 			if(res.hasOwnProperty(time)){
 				times.push(parseInt(time));
@@ -148,13 +144,14 @@ function populate_page(){
 		}
 	}
 
-	var url = '/data';
+	var url = '/queue';
 	var settings = {
 		method: 'GET',
 		success: add_to_page
 	};
 	$.ajax(url, settings);
 
+	/* call the listeners for all button clicks */
 	active_item();
 	remove();
 	download();

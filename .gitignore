@@ -7,9 +7,10 @@ node_modules/
 #heroku stuff
 Procfile
 
-#api keys
+#passwords and api keys
 aws-secret.json
 sendgrid-api.cfg
+queue-password.cfg
 
 #swp files
 *.swp
