@@ -88,7 +88,7 @@ var remove_job = function(req, res){
         if(err){
           console.log('@listObjects: ' + err);
           res.render('output', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
-          return res.end();
+          return;
         }
 
         if(data['contents'] == undefined){
@@ -96,10 +96,9 @@ var remove_job = function(req, res){
               if(err){
                 console.log('@deleteBucket: ' + err);
                 res.render('output', {title: 'Error', message: 'Sorry, an error has occured. Please try again.'});
-                return res.end();
+                return;
               }
-
-              return res.send({});
+              return res.end();
           });
         }
 
