@@ -288,8 +288,10 @@ var download =  function(req, res){
 
       archive.pipe(res); //stream .zip to client
 
-      /* zip-stream doesn't allow concurrent archiving of files
-      * so to get around that, I call this recursive function with
+      /* zip-stream doesn't allow concurrent archiving of files or the
+      * calling of archive.entry with multiple files
+      * so to get around that, this recursive function starts 
+      * with the first file and calls itself with 
       * the next file once the previous one is completed.
       * When they are all done, the archive gets finalized
       */
