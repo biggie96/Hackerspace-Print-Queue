@@ -135,6 +135,7 @@ function populate_page(){
 						queue += '<p class="ruid">RUID: ' + print_job['ruid'] + '</p>';
 						queue += '<p class="email">Email: ' + print_job['email'] + '</p>';
 						queue += '<p class="notes">Notes: ' + print_job['notes'] + '</p>';
+						queue += '<p class="color">Color: ' + print_job['color'] + '</p>';
 						queue += '<p class="id">ID: ' + String(times[i]) + '</p>';
 					queue += '</div>';
 

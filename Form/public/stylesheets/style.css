@@ -1,7 +1,7 @@
 /* General */
 html, body{
 	height: 100%;
-	overflow: hidden;
+	overflow: auto;
 	color: black !important;
 }
 
@@ -54,7 +54,7 @@ form{
 }
 
 input{
-	background-color: rgb(205, 197, 183) !important;	
+	background-color: rgb(205, 197, 183) !important;
 }
 
 input.form-control{
@@ -66,6 +66,9 @@ input.form-control{
 
 input[name="notes"]{
 	height: 40px;
+}
+
+input[name="color"]{
 	margin-bottom: 25px !important;
 }
 
@@ -97,15 +100,28 @@ input[type="text"], input[type="email"]{
 
 
 /* Loading */
-figure{
-	width: 50%;
-	float: right;
-	display: none;
+#loading {
+	height: 70% !important;
+	width: 30% !important;
+  position: absolute;
+  top: 170px;
+  right: 0;
+  bottom: 0px;
+  left: 0;
+  margin: auto;
+  margin-top: 0px;
+  width: 981px;
+  height: 610px;
+  background : url("../../images/cool.GIF") center;
+	background-repeat: no-repeat;
+  z-index: 0;
+  visibility: hidden;
 }
 
-#load_gif{
-	width: 150px;
-	height: 150px;
+#caption{
+	position: relative;
+		top: 30px;
+		left: 100px;
 }
 
 

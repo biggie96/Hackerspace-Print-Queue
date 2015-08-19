@@ -9,6 +9,7 @@
 	</head>
 
 	<body>
+
 		<div id="banner">
 
 			<div id="logo">
@@ -25,7 +26,6 @@
 		<div id="print_form">
 
 			<form role="form" action="/upload" enctype="multipart/form-data">
-
 
 				<div class="form-group">
 				<label for="name">Full Name</label>
@@ -47,26 +47,29 @@
 
 				<div class="form-group">
 				<label for="notes">Notes *Optional</label>
-				<input class="data form-control" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.." maxlength="150"> 
+				<input class="data form-control" type="text" name="notes" placeholder="any extra info on print ex. infill, etc.." maxlength="150">
 				</div>
 
 				<div class="form-group">
-				<label for="files">File(s) *Limit is 3 files totaling 10mb and they must be in .stl format</label>
-				<input class="data" type="file" name="stl_files" multiple id="files" accept=".stl"> 
+				<label for="color"> Enter colors in order of preference (Choices: red, white, black, yellow, blue) </label>
+				<input class="data form-control" type="text" name="color" placeholder="blue, white, black, yellow, red">
 				</div>
 
-				<div style="text-align:center" id="submit-box">  
+				<div class="form-group">
+				<label for="files">File(s) *Limit is 10 files totaling 10mb and they must be in .stl format</label>
+				<input class="data" type="file" name="stl_files" multiple id="files" accept=".stl">
+				</div>
+
+				<div style="text-align:center" id="submit-box">
 				<input class="btn btn-default" type="submit" value="Submit" id="submit">
 				</div>
 
 			</form>
 
-			<figure style="text-align:center">
-				<img src="images/ajax-loader.gif" id="load_gif">
-				<figcaption> </figcaption>
-			</figure>
+		</div>
 
-
+		<div id="loading">
+			<h3 id="caption"> Processing Request... </h3>
 		</div>
 
 		<div id="footer">

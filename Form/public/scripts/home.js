@@ -1,34 +1,26 @@
-/* This function submits the form as a post request */
+/* This function submits the form */
 function save_form(){
 	function start(){
-		$('figure').show();
+		document.getElementById('loading').style.visibility = 'visible';
+		$('#print_form').html('');
 	}
 
 	function done(resText){
-		$('figure').hide();
+		document.getElementById('loading').style.visibility = 'hidden';
 
 		var response = '<h2>' + resText + '</h2>';
 		response += '<a href="https://hackerspace-print-form.herokuapp.com/">Back</a>';
 		$('#print_form').html(response);
 	}
 
-	var percentage = 0;
-	function progress(e, position, total, percent){
-		if(percent > percentage){ //accounts for random percents that seem to show up
-			$('figcaption').text(String(percent) + '%');
-			percentage = percent;
-		}
-	}
-
-	$('form').unbind('submit').bind('submit', function(e){ 
+	$('form').unbind('submit').bind('submit', function(e){
 		e.preventDefault();
-		
+
 		var options = {
 		type: "POST",
 		resetForm: true,
 		beforeSubmit: start,
-		success: done,
-		uploadProgress: progress
+		success: done
 		};
 		$(this).ajaxSubmit(options); //setup ajax request
 
@@ -45,7 +37,7 @@ function field_validate(){
 	var netID = false;
 
 	/* validates name field */
-	$('input[name=name]').keyup(function(e){ 
+	$('input[name=name]').keyup(function(e){
 		if($(this).val().indexOf(' ') != -1 && $(this).val().replace(/ /g,'').length > 0){
 			$('#valid_name').prop('src', 'images/good.png'); //put a checkmark next to field
 			name = true;
@@ -57,7 +49,7 @@ function field_validate(){
 	});
 
 	/* validates netID field */
-	$('input[name=netID]').keyup(function(e){ 
+	$('input[name=netID]').keyup(function(e){
 		if($(this).val().replace(/ /g,'').length > 2){
 			$('#valid_netID').prop('src', 'images/good.png');
 			ruid = true;
@@ -74,7 +66,7 @@ function field_validate(){
 		var files = document.getElementById("files");
 
 		/* Checks if all fields are valid and (0 < number of files < max) */
-		if(name == true && ruid == true && (files.files.length > 0 && files.files.length < 4)){ 
+		if(name == true && ruid == true && (files.files.length > 0 && files.files.length < 11)){
 			$('#submit').prop("disabled",false); //enable submit button
 			save_form();
 		}
