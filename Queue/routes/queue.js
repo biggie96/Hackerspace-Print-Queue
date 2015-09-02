@@ -56,6 +56,32 @@ var remove_job = function(req, res){
     var s3 = new AWS.S3();
 
     /* Delete */
+    //remove from parse
+    //setup parse
+    var Parse = require('parse').Parse;
+    Parse.initialize("0rEzgPPAwytqrJSqzmNgHlErv6bnV9urmcMYmQf9", "gucaNYqC7tM5mSwb48LY4KeQN5JpafxhWBq81ID0");
+    var PrintInfo = Parse.Object.extend("PrintInfo");
+    //get the print to remove
+	var query = new Parse.Query(PrintInfo);
+    query.equalTo("folderName", req.query.id);
+	query.find({
+	    success: function(results){
+		    results[0].destroy({
+		        success: function(object){
+ 			        console.log("deleted from parse");
+			    },
+
+			    error: function(object, error){
+			        console.log("didnt delete from parse");
+			    }
+		    });
+		},
+		
+		error: function(error){
+		    console.log("no bullets, cant do it:" + error.message);
+		}
+	});
+
     var params = { Bucket: req.query.id };
     s3.listObjects(params, function(err, data){
         if(err){
